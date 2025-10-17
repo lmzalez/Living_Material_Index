@@ -24,7 +24,7 @@ defaults:
     values:
       layout: entry
       section: protocols
-   - scope:
+  - scope:
       path: ""
       type: "tools"
     values:
