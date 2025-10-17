@@ -5,6 +5,16 @@
   <title>Search — The Living Material Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="assets/style.css" rel="stylesheet" />
+  <style>
+    .searchbar { margin:.5rem 0 1rem; }
+    .searchbar input { width:100%; padding:.6rem; font-size:1rem; }
+    #hint { color:#666; font-size:.95rem; margin:.4rem 0 0; }
+    .results { list-style:none; padding-left:0; margin-top:.75rem; }
+    .results li { padding:.55rem .4rem; border-bottom:1px solid #eee; }
+    .badge { font-size:.75rem; padding:.08rem .45rem; border:1px solid #ddd; border-radius:999px; margin-left:.4rem; }
+    .meta { font-size:.9rem; color:#555; margin-top:.2rem; }
+    .muted { color:#666; font-size:.95rem; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,35 +22,153 @@
     <nav>
       <a href="pages/protocols.html">Protocols</a>
       <a href="pages/tools.html">Tools</a>
-      <a href="pages/atlas.html">Atlas</a>
       <a href="pages/curiosities.html">Curiosities</a>
       <a href="pages/about.html">About</a>
       <a href="search.html">Search</a>
     </nav>
   </header>
+
   <main>
     <h2>Search</h2>
-    <input id="q" type="search" placeholder="Type to filter…" />
-    <ul id="results"></ul>
+    <div class="searchbar">
+      <input id="q" type="search" placeholder="Type to search titles, tags, or sources…" autocomplete="off" />
+      <div id="hint" class="muted">Type at least 2 characters to see results.</div>
+    </div>
+    <ul id="results" class="results"></ul>
   </main>
+
   <footer><small>© The Living Material Index</small></footer>
+
   <script>
-    // Tiny demo dataset; later you can generate this or expand it.
-    const DATA = [
-      { title: "MICP Casting — Sand Blocks", url: "pages/protocols.html", section: "protocols" },
-      { title: "DIY 30°C Incubator", url: "pages/tools.html", section: "tools" },
-      { title: "Carbonate Lamellae on Clay", url: "pages/atlas.html", section: "atlas" },
-      { title: "On Bacterial Chromophores", url: "pages/curiosities.html", section: "curiosities" }
+    // Pages to index (same-origin)
+    const SOURCES = [
+      { url: 'pages/protocols.html',  section: 'protocols'   },
+      { url: 'pages/tools.html',      section: 'tools'       },
+      { url: 'pages/curiosities.html',section: 'curiosities' }
     ];
-    const q = document.getElementById('q');
-    const out = document.getElementById('results');
-    function render(list){ out.innerHTML = list.map(i => `<li><a href="${i.url}">${i.title}</a> — <small>${i.section}</small></li>`).join(""); }
-    q.addEventListener('input', () => {
-      const t = q.value.toLowerCase();
-      render(DATA.filter(i => i.title.toLowerCase().includes(t) || i.section.includes(t)));
-    });
-    render(DATA);
+
+    const out  = document.getElementById('results');
+    const hint = document.getElementById('hint');
+    const q    = document.getElementById('q');
+    let INDEX = [];
+
+    // Build index once (quietly). We won't render anything until the user types.
+    (async function buildIndex(){
+      const all = [];
+      for (const src of SOURCES){
+        try {
+          const res  = await fetch(src.url, { cache: 'no-cache' });
+          const html = await res.text();
+          const doc  = new DOMParser().parseFromString(html, 'text/html');
+
+          if (src.section === 'protocols') {
+            doc.querySelectorAll('section[data-category]').forEach(sec => {
+              const category = sec.getAttribute('data-category') || '';
+              sec.querySelectorAll('.card').forEach(card => {
+                const title = card.querySelector('h4')?.textContent?.trim();
+                const tags  = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim()).join(' ');
+                if (title) {
+                  all.push({
+                    title,
+                    url: 'pages/protocols.html#' + (category || 'protocols'),
+                    section: 'protocols',
+                    category,
+                    tags,
+                    source: '',
+                    year: ''
+                  });
+                }
+              });
+            });
+          }
+
+          if (src.section === 'tools') {
+            doc.querySelectorAll('#toolGrid .card').forEach(card => {
+              const title = card.querySelector('h3')?.textContent?.trim();
+              if (title) {
+                all.push({
+                  title,
+                  url: 'pages/tools.html',
+                  section: 'tools',
+                  category: card.getAttribute('data-category') || '',
+                  tags: (card.getAttribute('data-tags') || ''),
+                  source: '',
+                  year: ''
+                });
+              }
+            });
+          }
+
+          if (src.section === 'curiosities') {
+            doc.querySelectorAll('#curioGrid .card').forEach(card => {
+              const a = card.querySelector('h3 a');
+              const title = a?.textContent?.trim();
+              const href  = a?.getAttribute('href') || 'pages/curiosities.html';
+              if (title) {
+                all.push({
+                  title,
+                  url: href,
+                  section: 'curiosities',
+                  category: (card.getAttribute('data-type') || ''),
+                  tags: (card.getAttribute('data-tags') || ''),
+                  source: (card.getAttribute('data-source') || ''),
+                  year: (card.getAttribute('data-year') || '')
+                });
+              }
+            });
+          }
+        } catch (e) {
+          console.warn('Indexing failed for', src.url, e);
+        }
+      }
+
+      // De-duplicate by title+url
+      const seen = new Set();
+      INDEX = all.filter(i => {
+        const key = (i.title + '|' + i.url);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    })();
+
+    function render(list){
+      if (!list.length){
+        out.innerHTML = '<li class="muted">No results.</li>';
+        return;
+      }
+      out.innerHTML = list.slice(0, 20).map(i => {
+        const sec = `<span class="badge">${i.section}</span>`;
+        const cat = i.category ? `<span class="badge">${i.category}</span>` : '';
+        const metaBits = [i.source, i.year].filter(Boolean).join(' · ');
+        const meta = metaBits ? `<div class="meta">${metaBits}</div>` : '';
+        return `<li><a href="${i.url}">${i.title}</a> ${sec} ${cat}${meta}</li>`;
+      }).join('');
+    }
+
+    function search(){
+      const term = (q.value || '').toLowerCase().trim();
+      if (term.length < 2) {
+        out.innerHTML = '';
+        hint.textContent = 'Type at least 2 characters to see results.';
+        return;
+      }
+      hint.textContent = '';
+      const hits = INDEX.filter(i => {
+        const hay = [
+          i.title,
+          i.section,
+          i.category,
+          i.tags,
+          i.source,
+          i.year
+        ].join(' ').toLowerCase();
+        return hay.includes(term);
+      });
+      render(hits);
+    }
+
+    q.addEventListener('input', search);
   </script>
 </body>
 </html>
-
