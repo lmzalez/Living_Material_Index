@@ -5,6 +5,19 @@
   <title>Curiosities — The Living Material Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="../assets/style.css" rel="stylesheet" />
+  <style>
+    .controls { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; margin:.5rem 0 1rem; }
+    .controls .pill { border:1px solid #ddd; background:#fff; padding:.4rem .7rem; border-radius:999px; cursor:pointer; }
+    .controls .pill.active { outline:2px solid #000; }
+    .controls input[type="search"] { flex:1 1 260px; padding:.6rem; font-size:1rem; }
+    .controls select { padding:.45rem; }
+
+    .meta { font-size:.9rem; color:#555; margin:.4rem 0 .6rem; line-height:1.4; }
+    .meta b { font-weight:600; }
+    .tag { font-size:.8rem; padding:.15rem .5rem; border:1px solid #ddd; border-radius:999px; margin-right:.35rem; display:inline-block; }
+    .actions a { font-size:.9rem; margin-right:.6rem; }
+    .hidden { display:none !important; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,25 +25,153 @@
     <nav>
       <a href="protocols.html">Protocols</a>
       <a href="tools.html">Tools</a>
-      <a href="atlas.html">Atlas</a>
       <a href="curiosities.html">Curiosities</a>
       <a href="about.html">About</a>
       <a href="../search.html">Search</a>
     </nav>
   </header>
+
   <main>
     <h2>Curiosities</h2>
-    <p><strong>Curiosities</strong> is an informal archive of papers, talks, and projects that expand how we think about living materials.  
-    It’s a place to post intriguing discoveries — conceptual, scientific, or aesthetic — that might spark new directions.</p>
+    <p>
+      <strong>Curiosities</strong> is an informal archive of papers, talks, and projects that extend the research and imagination behind living materials. 
+      It includes studies that are biological, technical, or cultural in nature and that might inspire new directions. 
+      Each entry notes its type, source, and year.
+    </p>
 
-    <ul>
-      <li><a href="#">Living pigments and structural coloration in microbes</a></li>
-      <li><a href="#">Biofilms as architectural skins</a></li>
-      <li><a href="#">Microbial sensing and material feedback systems</a></li>
-    </ul>
+    <!-- Filters + search + sort -->
+    <div class="controls">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="paper">Papers</button>
+      <button class="pill" data-filter="talk">Talks</button>
+      <button class="pill" data-filter="project">Projects</button>
+
+      <input id="q" type="search" placeholder="Search title, source, or tag…">
+      <label for="sort" class="sr-only">Sort</label>
+      <select id="sort" title="Sort">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+        <option value="az">A–Z</option>
+        <option value="za">Z–A</option>
+      </select>
+    </div>
+
+    <div id="curioGrid" class="grid">
+      <!-- 9 placeholder cards (swap links/text later) -->
+      <article class="card" data-type="paper" data-year="2025" data-tags="pigment color microbes optics" data-source="Journal A">
+        <h3><a href="#" target="_blank" rel="noopener">Living Pigments & Structural Color</a></h3>
+        <p class="meta"><b>Type:</b> Paper • <b>Source:</b> Journal A • <b>Year:</b> 2025</p>
+        <p>Explores chromophore production and structural optics in microbial systems; useful for color-stable ELM surfaces.</p>
+        <p><span class="tag">color</span><span class="tag">optics</span><span class="tag">microbes</span></p>
+      </article>
+
+      <article class="card" data-type="paper" data-year="2024" data-tags="biofilm morphology EPS" data-source="Journal B">
+        <h3><a href="#" target="_blank" rel="noopener">Biofilm Morphology & Surface Behavior</a></h3>
+        <p class="meta"><b>Type:</b> Paper • <b>Source:</b> Journal B • <b>Year:</b> 2024</p>
+        <p>Links EPS composition to wrinkling patterns; informs texture control strategies.</p>
+        <p><span class="tag">biofilm</span><span class="tag">EPS</span></p>
+      </article>
+
+      <article class="card" data-type="paper" data-year="2023" data-tags="MICP mineralization carbonate" data-source="Conference C">
+        <h3><a href="#" target="_blank" rel="noopener">MICP Pathways in Porous Media</a></h3>
+        <p class="meta"><b>Type:</b> Paper • <b>Source:</b> Conf. C • <b>Year:</b> 2023</p>
+        <p>Highlights process parameters that govern carbonate distribution in sand/clay matrices.</p>
+        <p><span class="tag">MICP</span><span class="tag">carbonate</span></p>
+      </article>
+
+      <article class="card" data-type="talk" data-year="2025" data-tags="ethics governance safety" data-source="Symposium">
+        <h3><a href="#" target="_blank" rel="noopener">Ethics & Governance in Living Materials</a></h3>
+        <p class="meta"><b>Type:</b> Talk • <b>Source:</b> Symposium • <b>Year:</b> 2025</p>
+        <p>Frameworks for sharing, attribution, and biosafety in open ELM repositories.</p>
+        <p><span class="tag">ethics</span><span class="tag">policy</span></p>
+      </article>
+
+      <article class="card" data-type="talk" data-year="2024" data-tags="imaging methods documentation" data-source="Seminar">
+        <h3><a href="#" target="_blank" rel="noopener">Imaging Methods for ELM Documentation</a></h3>
+        <p class="meta"><b>Type:</b> Talk • <b>Source:</b> Seminar • <b>Year:</b> 2024</p>
+        <p>Standardized lighting and color management for reproducible visual records.</p>
+        <p><span class="tag">imaging</span><span class="tag">methods</span></p>
+      </article>
+
+      <article class="card" data-type="talk" data-year="2023" data-tags="fieldwork sampling methods" data-source="Guest Lecture">
+        <h3><a href="#" target="_blank" rel="noopener">Field Sampling for Microbial Materials</a></h3>
+        <p class="meta"><b>Type:</b> Talk • <b>Source:</b> Guest Lecture • <b>Year:</b> 2023</p>
+        <p>Site permissions, chain-of-custody, and environmental metadata capture.</p>
+        <p><span class="tag">fieldwork</span><span class="tag">sampling</span></p>
+      </article>
+
+      <article class="card" data-type="project" data-year="2025" data-tags="prototype biocement ceramics" data-source="Lab Showcase">
+        <h3><a href="#" target="_blank" rel="noopener">Biocement Tiles — Prototype Set</a></h3>
+        <p class="meta"><b>Type:</b> Project • <b>Source:</b> Lab Showcase • <b>Year:</b> 2025</p>
+        <p>Material study series exploring curing schedules and pigment retention.</p>
+        <p><span class="tag">biocement</span><span class="tag">tiles</span></p>
+      </article>
+
+      <article class="card" data-type="project" data-year="2024" data-tags="parametric layouts growth zones" data-source="Studio">
+        <h3><a href="#" target="_blank" rel="noopener">Growth-Zone Layouts</a></h3>
+        <p class="meta"><b>Type:</b> Project • <b>Source:</b> Studio • <b>Year:</b> 2024</p>
+        <p>Parametric patterns for seeding and boundary effects in composite parts.</p>
+        <p><span class="tag">parametric</span><span class="tag">layout</span></p>
+      </article>
+
+      <article class="card" data-type="project" data-year="2023" data-tags="sensor feedback control" data-source="Prototype">
+        <h3><a href="#" target="_blank" rel="noopener">Humidity-Feedback Cure Box</a></h3>
+        <p class="meta"><b>Type:</b> Project • <b>Source:</b> Prototype • <b>Year:</b> 2023</p>
+        <p>Closed-loop RH control for reproducible curing conditions.</p>
+        <p><span class="tag">humidity</span><span class="tag">control</span></p>
+      </article>
+    </div>
   </main>
+
   <footer><small>© The Living Material Index</small></footer>
+
   <script src="../assets/app.js"></script>
+  <script>
+    const pills = document.querySelectorAll('.controls .pill');
+    const search = document.getElementById('q');
+    const sortSel = document.getElementById('sort');
+    const grid = document.getElementById('curioGrid');
+    const cards = Array.from(grid.querySelectorAll('.card'));
+
+    function apply() {
+      const active = document.querySelector('.controls .pill.active')?.dataset.filter || 'all';
+      const q = (search.value || '').toLowerCase();
+      const mode = sortSel.value;
+
+      // filter by type + search
+      cards.forEach(c => {
+        const typeOK = (active === 'all' || c.dataset.type === active);
+        const text = (c.textContent || '').toLowerCase();
+        const tags = (c.dataset.tags || '').toLowerCase();
+        const source = (c.dataset.source || '').toLowerCase();
+        const qOK = !q || text.includes(q) || tags.includes(q) || source.includes(q);
+        c.classList.toggle('hidden', !(typeOK && qOK));
+      });
+
+      // sort (year or title)
+      const visible = cards.filter(c => !c.classList.contains('hidden'));
+      visible.sort((a,b) => {
+        if (mode === 'new' || mode === 'old') {
+          const ya = parseInt(a.dataset.year || '0', 10);
+          const yb = parseInt(b.dataset.year || '0', 10);
+          return mode === 'new' ? yb - ya : ya - yb;
+        }
+        const ta = a.querySelector('h3')?.textContent.trim().toLowerCase() || '';
+        const tb = b.querySelector('h3')?.textContent.trim().toLowerCase() || '';
+        return mode === 'az' ? ta.localeCompare(tb) : tb.localeCompare(ta);
+      });
+      visible.forEach(el => grid.appendChild(el));
+    }
+
+    pills.forEach(p => p.addEventListener('click', () => {
+      pills.forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      apply();
+      document.querySelector('main').scrollIntoView({ behavior:'smooth', block:'start' });
+    }));
+    search.addEventListener('input', apply);
+    sortSel.addEventListener('change', apply);
+    apply();
+  </script>
 </body>
 </html>
-
