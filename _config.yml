@@ -5,20 +5,51 @@ baseurl: ""
 url: ""
 
 collections:
-  protocols:  { output: true, permalink: /protocols/:slug/ }
-  materials:  { output: true, permalink: /materials/:slug/ }
-  tools:      { output: true, permalink: /tools/:slug/ }
-  atlas:      { output: true, permalink: /atlas/:slug/ }
-  curiosities:{ output: true, permalink: /curiosities/:slug/ }
+  protocols:
+    output: true
+    permalink: /protocols/:slug/
+  materials:
+    output: true
+    permalink: /materials/:slug/
+  tools:
+    output: true
+    permalink: /tools/:slug/
+  atlas:
+    output: true
+    permalink: /atlas/:slug/
+  curiosities:
+    output: true
+    permalink: /curiosities/:slug/
 
 defaults:
-  - scope: { path: "", type: "protocols" }
-    values: { layout: entry, section: protocols }
-  - scope: { path: "", type: "materials" }
-    values: { layout: entry, section: materials }
-  - scope: { path: "", type: "tools" }
-    values: { layout: entry, section: tools }
-  - scope: { path: "", type: "atlas" }
-    values: { layout: entry, section: atlas }
-  - scope: { path: "", type: "curiosities" }
-    values: { layout: entry, section: curiosities }
+  - scope:
+      path: ""
+      type: "protocols"
+    values:
+      layout: entry
+      section: protocols
+  - scope:
+      path: ""
+      type: "materials"
+    values:
+      layout: entry
+      section: materials
+  - scope:
+      path: ""
+      type: "tools"
+    values:
+      layout: entry
+      section: tools
+  - scope:
+      path: ""
+      type: "atlas"
+    values:
+      layout: entry
+      section: atlas
+  - scope:
+    # curiosities collection
+      path: ""
+      type: "curiosities"
+    values:
+      layout: entry
+      section: curiosities
