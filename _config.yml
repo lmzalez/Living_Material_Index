@@ -1,5 +1,6 @@
 title: The Living Material Index
 theme: minima
+
 baseurl: "/Living_Material_Index"
 url: "https://lmzalez.github.io"
 
@@ -37,7 +38,6 @@ defaults:
       layout: entry
       section: atlas
   - scope:
-    # curiosities collection
       path: ""
       type: "curiosities"
     values:
