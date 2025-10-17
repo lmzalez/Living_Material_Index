@@ -1,1 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Search — The Living Material Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="assets/style.css" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1><a href="./">The Living Material Index</a></h1>
+    <nav>
+      <a href="pages/protocols.html">Protocols</a>
+      <a href="pages/tools.html">Tools</a>
+      <a href="pages/atlas.html">Atlas</a>
+      <a href="pages/curiosities.html">Curiosities</a>
+      <a href="pages/about.html">About</a>
+      <a href="search.html">Search</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Search</h2>
+    <input id="q" type="search" placeholder="Type to filter…" />
+    <ul id="results"></ul>
+  </main>
+  <footer><small>© The Living Material Index</small></footer>
+  <script>
+    // Tiny demo dataset; later you can generate this or expand it.
+    const DATA = [
+      { title: "MICP Casting — Sand Blocks", url: "pages/protocols.html", section: "protocols" },
+      { title: "DIY 30°C Incubator", url: "pages/tools.html", section: "tools" },
+      { title: "Carbonate Lamellae on Clay", url: "pages/atlas.html", section: "atlas" },
+      { title: "On Bacterial Chromophores", url: "pages/curiosities.html", section: "curiosities" }
+    ];
+    const q = document.getElementById('q');
+    const out = document.getElementById('results');
+    function render(list){ out.innerHTML = list.map(i => `<li><a href="${i.url}">${i.title}</a> — <small>${i.section}</small></li>`).join(""); }
+    q.addEventListener('input', () => {
+      const t = q.value.toLowerCase();
+      render(DATA.filter(i => i.title.toLowerCase().includes(t) || i.section.includes(t)));
+    });
+    render(DATA);
+  </script>
+</body>
+</html>
 
