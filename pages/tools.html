@@ -5,6 +5,18 @@
   <title>Tools — The Living Material Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="../assets/style.css" rel="stylesheet" />
+  <style>
+    .filters { display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0 1rem; }
+    .filters button { border:1px solid #ddd; background:#fff; padding:.4rem .7rem; border-radius:999px; cursor:pointer; }
+    .filters button.active { outline:2px solid #000; }
+    .meta { font-size:.9rem; color:#555; margin:.5rem 0; }
+    .meta strong { font-weight:600; }
+    .actions a { font-size:.9rem; margin-right:.6rem; }
+    .searchbar { margin:.5rem 0 1rem; }
+    .searchbar input { width:100%; padding:.6rem; font-size:1rem; }
+    .tag { font-size:.8rem; padding:.15rem .5rem; border:1px solid #ddd; border-radius:999px; margin-right:.35rem; display:inline-block; }
+    .hidden { display:none !important; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,32 +24,203 @@
     <nav>
       <a href="protocols.html">Protocols</a>
       <a href="tools.html">Tools</a>
-      <a href="atlas.html">Atlas</a>
       <a href="curiosities.html">Curiosities</a>
       <a href="about.html">About</a>
       <a href="../search.html">Search</a>
     </nav>
-  </header>
+
   <main>
     <h2>Tools</h2>
-    <p>The <strong>Tools</strong> section collects digital and physical instruments that support living-material workflows — from computational models and fabrication scripts to custom incubators and imaging setups.</p>
+    <p>
+      The <strong>Tools</strong> catalog aggregates digital and physical instruments that support ELM workflows analysis scripts,
+      control rigs, imaging setups, and reference calculators. Each entry includes a brief description, status, and links to source files or documentation when available.
+    </p>
 
-    <div class="grid">
-      <div class="card">
-        <h3>DIY 30°C Incubator</h3>
-        <p>A simple temperature-controlled chamber for microbial cultures.</p>
+    <!-- Category filter + keyword search -->
+    <div class="filters" role="group" aria-label="Filter tools by category">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="physical">Physical</button>
+      <button data-filter="digital">Digital</button>
+      <button data-filter="analysis">Analysis</button>
+    </div>
+    <div class="searchbar">
+      <input id="toolSearch" type="search" placeholder="Search tools by name or tag…">
+    </div>
+
+    <div id="toolGrid" class="grid">
+      <!-- PHYSICAL -->
+      <div class="card" data-category="physical" data-tags="incubator control temperature bsl">
+        <h3>DIY 30 °C Incubator</h3>
+        <p>A compact, stable-temperature chamber for microbial culture work and material conditioning.</p>
+        <p class="meta">
+          <strong>Type:</strong> Physical • <strong>Status:</strong> Prototype • <strong>Safety:</strong> BSL-1 workflows
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Build notes (coming soon)</a>
+          <a href="#" aria-disabled="true">Wiring diagram</a>
+        </p>
+        <p>
+          <span class="tag">incubator</span><span class="tag">control</span><span class="tag">temperature</span>
+        </p>
       </div>
-      <div class="card">
-        <h3>Assembly Sequencer Add-on</h3>
-        <p>Blender-based tool for sequencing multi-part systems in design workflows.</p>
+
+      <div class="card" data-category="physical" data-tags="imaging illumination rig">
+        <h3>Imaging Rig — Diffuse Light Box</h3>
+        <p>Simple, repeatable lighting enclosure for documenting color, texture, and growth morphology.</p>
+        <p class="meta">
+          <strong>Type:</strong> Physical • <strong>Status:</strong> Draft • <strong>Includes:</strong> cut files, BOM
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Cut files</a>
+          <a href="#" aria-disabled="true">Assembly guide</a>
+        </p>
+        <p>
+          <span class="tag">imaging</span><span class="tag">lighting</span><span class="tag">documentation</span>
+        </p>
       </div>
-      <div class="card">
+
+      <div class="card" data-category="physical" data-tags="humidity chamber growth">
+        <h3>Bench-top Humidity Chamber</h3>
+        <p>Controlled humidity enclosure for curing and environmental exposure studies.</p>
+        <p class="meta">
+          <strong>Type:</strong> Physical • <strong>Status:</strong> Concept • <strong>Range:</strong> 40–95% RH
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Design notes</a>
+          <a href="#" aria-disabled="true">Control script</a>
+        </p>
+        <p>
+          <span class="tag">humidity</span><span class="tag">curing</span><span class="tag">exposure</span>
+        </p>
+      </div>
+
+      <!-- DIGITAL -->
+      <div class="card" data-category="digital" data-tags="modeling parametric geometry">
+        <h3>Parametric Growth Sketcher</h3>
+        <p>Lightweight geometry helper for laying out growth zones and sample arrays before fabrication.</p>
+        <p class="meta">
+          <strong>Type:</strong> Digital • <strong>Status:</strong> Prototype • <strong>Format:</strong> Script / notebook
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Download</a>
+          <a href="#" aria-disabled="true">Docs</a>
+        </p>
+        <p>
+          <span class="tag">parametric</span><span class="tag">layout</span><span class="tag">design</span>
+        </p>
+      </div>
+
+      <div class="card" data-category="digital" data-tags="notebook template protocol">
+        <h3>Protocol Template Generator</h3>
+        <p>A minimal template for drafting public-safe protocol summaries with consistent metadata.</p>
+        <p class="meta">
+          <strong>Type:</strong> Digital • <strong>Status:</strong> Draft • <strong>Output:</strong> Markdown
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Template</a>
+          <a href="#" aria-disabled="true">Usage notes</a>
+        </p>
+        <p>
+          <span class="tag">docs</span><span class="tag">template</span><span class="tag">metadata</span>
+        </p>
+      </div>
+
+      <div class="card" data-category="digital" data-tags="color imaging analysis">
+        <h3>Color & Texture Sampler</h3>
+        <p>Simple script for extracting ΔE, histograms, and surface descriptors from standardized images.</p>
+        <p class="meta">
+          <strong>Type:</strong> Digital • <strong>Status:</strong> Prototype • <strong>Input:</strong> PNG/JPEG
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Notebook</a>
+          <a href="#" aria-disabled="true">Example dataset</a>
+        </p>
+        <p>
+          <span class="tag">color</span><span class="tag">texture</span><span class="tag">imaging</span>
+        </p>
+      </div>
+
+      <!-- ANALYSIS -->
+      <div class="card" data-category="analysis" data-tags="optical density calculator dilution planning">
         <h3>Optical Density Calculator</h3>
-        <p>Spreadsheet and Python script for dilution planning and OD target estimation.</p>
+        <p>Spreadsheet and script for dilution planning, OD targets, and timing estimates.</p>
+        <p class="meta">
+          <strong>Type:</strong> Analysis • <strong>Status:</strong> Usable • <strong>Format:</strong> CSV/XLSX + Python
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Spreadsheet</a>
+          <a href="#" aria-disabled="true">Python script</a>
+        </p>
+        <p>
+          <span class="tag">OD</span><span class="tag">planning</span><span class="tag">growth</span>
+        </p>
+      </div>
+
+      <div class="card" data-category="analysis" data-tags="mechanical compression data">
+        <h3>Compression Data Helper</h3>
+        <p>Quick-analysis tool for compressive strength tests and curve visualization.</p>
+        <p class="meta">
+          <strong>Type:</strong> Analysis • <strong>Status:</strong> Draft • <strong>Input:</strong> CSV
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Notebook</a>
+          <a href="#" aria-disabled="true">Sample data</a>
+        </p>
+        <p>
+          <span class="tag">mechanical</span><span class="tag">strength</span><span class="tag">plots</span>
+        </p>
+      </div>
+
+      <div class="card" data-category="analysis" data-tags="porosity image analysis">
+        <h3>Image-Based Porosity Estimator</h3>
+        <p>Basic thresholding workflow to approximate porosity from plan-view images.</p>
+        <p class="meta">
+          <strong>Type:</strong> Analysis • <strong>Status:</strong> Concept • <strong>Method:</strong> threshold + count
+        </p>
+        <p class="actions">
+          <a href="#" aria-disabled="true">Notebook</a>
+          <a href="#" aria-disabled="true">Method notes</a>
+        </p>
+        <p>
+          <span class="tag">porosity</span><span class="tag">image</span><span class="tag">analysis</span>
+        </p>
       </div>
     </div>
   </main>
+
   <footer><small>© The Living Material Index</small></footer>
+
   <script src="../assets/app.js"></script>
+  <script>
+    // Category filter
+    const toolButtons = document.querySelectorAll('.filters button');
+    const toolCards = document.querySelectorAll('#toolGrid .card');
+    toolButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toolButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        toolCards.forEach(card => {
+          card.classList.toggle('hidden', !(f === 'all' || card.dataset.category === f));
+        });
+        document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Keyword search (name + tags)
+    const box = document.getElementById('toolSearch');
+    box.addEventListener('input', () => {
+      const q = box.value.trim().toLowerCase();
+      toolCards.forEach(card => {
+        const text = (card.textContent || '').toLowerCase();
+        const tags = (card.dataset.tags || '').toLowerCase();
+        const matches = text.includes(q) || tags.includes(q);
+        // Respect current category filter too
+        const active = document.querySelector('.filters button.active').dataset.filter;
+        const catOK = active === 'all' || card.dataset.category === active;
+        card.classList.toggle('hidden', !(matches && catOK));
+      });
+    });
+  </script>
 </body>
 </html>
