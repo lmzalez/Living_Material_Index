@@ -5,6 +5,13 @@
   <title>Protocols — The Living Material Index</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="../assets/style.css" rel="stylesheet" />
+  <style>
+    /* small niceties for the filter */
+    .filters { display: flex; gap: .5rem; flex-wrap: wrap; margin: .5rem 0 1rem; }
+    .filters button { border: 1px solid #ddd; background: #fff; padding: .4rem .7rem; border-radius: 999px; cursor: pointer; }
+    .filters button.active { outline: 2px solid #000; }
+    section { scroll-margin-top: 72px; }
+  </style>
 </head>
 <body>
   <header>
@@ -12,28 +19,138 @@
     <nav>
       <a href="protocols.html">Protocols</a>
       <a href="tools.html">Tools</a>
-      <a href="atlas.html">Atlas</a>
       <a href="curiosities.html">Curiosities</a>
       <a href="about.html">About</a>
       <a href="../search.html">Search</a>
     </nav>
   </header>
+
   <main>
     <h2>Protocols</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>MICP Casting — Sand Blocks (BSL-1)</h3>
-        <p>Replace with your summary and images later.</p>
-        <div><span class="tag">MICP</span> <span class="tag">casting</span></div>
-      </div>
-      <div class="card">
-        <h3>Embedding B. subtilis in slip</h3>
-        <p>Placeholder notes about preparation and curing. Add details later.</p>
-      </div>
+
+    <!-- Quick jump links 
+    <p>
+      <a href="#biology">Biology</a> ·
+      <a href="#material-science">Material Science</a> ·
+      <a href="#fabrication">Fabrication</a> ·
+      <a href="#computation">Computation</a> ·
+      <a href="#fieldwork">Fieldwork</a>
+    </p> -->
+
+    <!-- Category filter -->
+    <div class="filters" role="group" aria-label="Filter protocols by category">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="biology">Biology</button>
+      <button data-filter="material-science">Material Science</button>
+      <button data-filter="fabrication">Fabrication</button>
+      <button data-filter="computation">Computation</button>
+      <button data-filter="fieldwork">Fieldwork</button>
     </div>
+
+    <!-- BIOLOGY -->
+    <section id="biology" data-category="biology" aria-labelledby="biology-title">
+      <h3 id="biology-title">Biology</h3>
+      <div class="grid">
+        <div class="card"><h4>Protocol 1</h4><p>Placeholder summary for a biology-focused protocol.</p><div><span class="tag">culture</span> <span class="tag">BSL-1</span></div></div>
+        <div class="card"><h4>Protocol 2</h4><p>Placeholder summary for media prep or growth conditions.</p><div><span class="tag">media</span> <span class="tag">OD</span></div></div>
+        <div class="card"><h4>Protocol 3</h4><p>Placeholder summary for analytical/measurement workflow.</p><div><span class="tag">microscopy</span> <span class="tag">analytics</span></div></div>
+        <div class="card"><h4>Protocol 4</h4><p>Placeholder summary for plating and colony selection.</p><div><span class="tag">plating</span> <span class="tag">selection</span></div></div>
+        <div class="card"><h4>Protocol 5</h4><p>Placeholder summary for inoculation and incubation timing.</p><div><span class="tag">inoculation</span> <span class="tag">timing</span></div></div>
+        <div class="card"><h4>Protocol 6</h4><p>Placeholder summary for sterile technique practice.</p><div><span class="tag">sterile</span> <span class="tag">workflow</span></div></div>
+        <div class="card"><h4>Protocol 7</h4><p>Placeholder summary for cryostock preparation.</p><div><span class="tag">glycerol</span> <span class="tag">archive</span></div></div>
+        <div class="card"><h4>Protocol 8</h4><p>Placeholder summary for basic transformation.</p><div><span class="tag">competent</span> <span class="tag">heat-shock</span></div></div>
+      </div>
+    </section>
+
+
+    <!-- MATERIAL SCIENCE -->
+    <section id="material-science" data-category="material-science" aria-labelledby="material-science-title">
+      <h3 id="material-science-title">Material Science</h3>
+      <div class="grid">
+        <div class="card"><h4>Protocol 1</h4><p>Placeholder summary for substrate preparation.</p><div><span class="tag">substrate</span> <span class="tag">porosity</span></div></div>
+        <div class="card"><h4>Protocol 2</h4><p>Placeholder summary for composite formation.</p><div><span class="tag">composite</span> <span class="tag">mixing</span></div></div>
+        <div class="card"><h4>Protocol 3</h4><p>Placeholder summary for mechanical testing.</p><div><span class="tag">compression</span> <span class="tag">rig</span></div></div>
+        <div class="card"><h4>Protocol 4</h4><p>Placeholder summary for permeability testing.</p><div><span class="tag">permeability</span> <span class="tag">flow</span></div></div>
+        <div class="card"><h4>Protocol 5</h4><p>Placeholder summary for pH buffering measurement.</p><div><span class="tag">pH</span> <span class="tag">buffer</span></div></div>
+        <div class="card"><h4>Protocol 6</h4><p>Placeholder summary for surface energy/adhesion tests.</p><div><span class="tag">adhesion</span> <span class="tag">contact-angle</span></div></div>
+        <div class="card"><h4>Protocol 7</h4><p>Placeholder summary for curing under controlled humidity.</p><div><span class="tag">humidity</span> <span class="tag">conditioning</span></div></div>
+      </div>
+    </section>
+
+
+    <!-- FABRICATION -->
+    <section id="fabrication" data-category="fabrication" aria-labelledby="fabrication-title">
+      <h3 id="fabrication-title">Fabrication</h3>
+      <div class="grid">
+        <div class="card"><h4>Protocol 1</h4><p>Placeholder summary for casting workflow.</p><div><span class="tag">casting</span> <span class="tag">molds</span></div></div>
+        <div class="card"><h4>Protocol 2</h4><p>Placeholder summary for slip preparation and forming.</p><div><span class="tag">slip</span> <span class="tag">forming</span></div></div>
+        <div class="card"><h4>Protocol 3</h4><p>Placeholder summary for 3D printing setup.</p><div><span class="tag">3D-print</span> <span class="tag">nozzle</span></div></div>
+        <div class="card"><h4>Protocol 4</h4><p>Placeholder summary for CNC tooling and feeds.</p><div><span class="tag">CNC</span> <span class="tag">tooling</span></div></div>
+        <div class="card"><h4>Protocol 5</h4><p>Placeholder summary for sterile fabrication techniques.</p><div><span class="tag">sterile</span> <span class="tag">workflow</span></div></div>
+        <div class="card"><h4>Protocol 6</h4><p>Placeholder summary for embedding sensors.</p><div><span class="tag">integration</span> <span class="tag">sensing</span></div></div>
+        <div class="card"><h4>Protocol 7</h4><p>Placeholder summary for drying/curing schedules.</p><div><span class="tag">curing</span> <span class="tag">schedule</span></div></div>
+        <div class="card"><h4>Protocol 8</h4><p>Placeholder summary for mold release and demolding.</p><div><span class="tag">release</span> <span class="tag">demold</span></div></div>
+        <div class="card"><h4>Protocol 9</h4><p>Placeholder summary for finishing and post-processing.</p><div><span class="tag">finishing</span> <span class="tag">surface</span></div></div>
+      </div>
+    </section>
+
+
+    <!-- COMPUTATION -->
+    <section id="computation" data-category="computation" aria-labelledby="computation-title">
+      <h3 id="computation-title">Computation</h3>
+      <div class="grid">
+        <div class="card"><h4>Protocol 1</h4><p>Placeholder summary for parametric modeling.</p><div><span class="tag">parametric</span> <span class="tag">geometry</span></div></div>
+        <div class="card"><h4>Protocol 2</h4><p>Placeholder summary for simulation setup.</p><div><span class="tag">simulation</span> <span class="tag">solver</span></div></div>
+        <div class="card"><h4>Protocol 3</h4><p>Placeholder summary for reaction–diffusion patterns.</p><div><span class="tag">reaction-diffusion</span> <span class="tag">pattern</span></div></div>
+        <div class="card"><h4>Protocol 4</h4><p>Placeholder summary for finite element testing.</p><div><span class="tag">FEA</span> <span class="tag">mesh</span></div></div>
+        <div class="card"><h4>Protocol 5</h4><p>Placeholder summary for image-based analysis.</p><div><span class="tag">vision</span> <span class="tag">threshold</span></div></div>
+        <div class="card"><h4>Protocol 6</h4><p>Placeholder summary for data visualization.</p><div><span class="tag">charts</span> <span class="tag">plots</span></div></div>
+        <div class="card"><h4>Protocol 7</h4><p>Placeholder summary for generative design.</p><div><span class="tag">generative</span> <span class="tag">evolutionary</span></div></div>
+        <div class="card"><h4>Protocol 8</h4><p>Placeholder summary for hardware control scripts.</p><div><span class="tag">control</span> <span class="tag">scripting</span></div></div>
+      </div>
+    </section>
+
+
+    <!-- FIELDWORK -->
+    <section id="fieldwork" data-category="fieldwork" aria-labelledby="fieldwork-title">
+      <h3 id="fieldwork-title">Fieldwork</h3>
+      <div class="grid">
+        <div class="card"><h4>Protocol 1</h4><p>Placeholder summary for sampling strategy.</p><div><span class="tag">sampling</span> <span class="tag">site</span></div></div>
+        <div class="card"><h4>Protocol 2</h4><p>Placeholder summary for sample handling and labeling.</p><div><span class="tag">handling</span> <span class="tag">labels</span></div></div>
+        <div class="card"><h4>Protocol 3</h4><p>Placeholder summary for environmental monitoring.</p><div><span class="tag">humidity</span> <span class="tag">temperature</span></div></div>
+        <div class="card"><h4>Protocol 4</h4><p>Placeholder summary for soil characterization.</p><div><span class="tag">soil</span> <span class="tag">analysis</span></div></div>
+        <div class="card"><h4>Protocol 5</h4><p>Placeholder summary for material sourcing in context.</p><div><span class="tag">local</span> <span class="tag">sourcing</span></div></div>
+      </div>
+    </section>
+
   </main>
+
   <footer><small>© The Living Material Index</small></footer>
+
   <script src="../assets/app.js"></script>
+  <script>
+    // Simple category filter
+    const buttons = document.querySelectorAll('.filters button');
+    const sections = document.querySelectorAll('section[data-category]');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+
+        sections.forEach(sec => {
+          if (f === 'all' || sec.dataset.category === f) {
+            sec.style.display = '';
+          } else {
+            sec.style.display = 'none';
+          }
+        });
+
+        // Scroll to top of main after filtering (nice UX)
+        document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
 </body>
 </html>
-
