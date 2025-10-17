@@ -8,9 +8,6 @@ collections:
   protocols:
     output: true
     permalink: /protocols/:slug/
-  materials:
-    output: true
-    permalink: /materials/:slug/
   tools:
     output: true
     permalink: /tools/:slug/
@@ -28,13 +25,7 @@ defaults:
     values:
       layout: entry
       section: protocols
-  - scope:
-      path: ""
-      type: "materials"
-    values:
-      layout: entry
-      section: materials
-  - scope:
+   - scope:
       path: ""
       type: "tools"
     values:
